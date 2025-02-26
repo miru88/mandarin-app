@@ -10,6 +10,7 @@
 node_modules/
 api/node_modules/
 front/node_modules/
+front/*.map
 
 # NestJS build output
 api/dist/
