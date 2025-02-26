@@ -1,28 +1,33 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
-
 # Compiled output
 /dist
 /tmp
 /out-tsc
 /bazel-out
 
-# Node (for both API and Frontend)
+# Node modules (for both API and Frontend)
 node_modules/
 api/node_modules/
 front/node_modules/
-front/*.map
 
-# NestJS build output
+# Build outputs
 api/dist/
-
-# Angular-specific cache & build files
-/.angular/cache
 front/dist/
+
+# Angular cache & build files
+/.angular/cache
 
 # Logs
 npm-debug.log
 yarn-error.log
 **/*.log
+
+# Ignore environment files (security reasons)
+api/.env
+front/.env
+!.env.example  # Allow tracking an example env file
+
+# Ignore frontend source maps (optional)
+front/*.map
 
 # IDEs and editors
 .idea/
@@ -33,26 +38,21 @@ yarn-error.log
 .settings/
 *.sublime-workspace
 
-# Visual Studio Code
+# Visual Studio Code settings
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.history/*
 
 # Miscellaneous
 .sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
+connect.lock
+coverage/
+libpeerconnection.log
 testem.log
-/typings
+typings/
 
 # System files
 .DS_Store
 Thumbs.db
-
-# Environment files (API and Frontend)
-api/.env
-front/.env
