@@ -11,9 +11,7 @@ export class AppComponent implements OnInit{
 
   constructor(private readonly httpService: HttpService) {}
 
-  character = '爱';
-  pinyin = 'ai4';
-  definition = 'love';
+
 
   stuff: any;
 
