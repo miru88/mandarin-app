@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Debug NestJS API",
+        "skipFiles": ["<node_internals>/**"],
+        "args": ["${workspaceFolder}/api/src/main.ts"],
+        "runtimeArgs": [
+          "--require", "ts-node/register",
+          "--require", "tsconfig-paths/register"
+        ],
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen",
+        "envFile": "${workspaceFolder}/.env",
+        "sourceMaps": true,
+        "outFiles": ["${workspaceFolder}/dist/**/*.js"]
+      }
+    ]
+  }
