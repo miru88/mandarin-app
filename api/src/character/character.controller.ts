@@ -1,7 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { CharacterService } from './character.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { Roles } from 'src/auth/guard/roles.guard';
 
 @Controller('character')
 export class CharacterController {
@@ -11,7 +13,7 @@ export class CharacterController {
   // create(@Body() createCharacterDto: CreateCharacterDto) {
   //   return this.characterService.create(createCharacterDto);
   // }
-
+  @Roles('ADMIN')
   @Get()
   findAll() {
     return this.characterService.findAll();

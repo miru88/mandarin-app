@@ -7,6 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UserService } from './user/user.service';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
+import { LoginUserDto } from './user/user.dto';
 
 @Injectable()
 export class AuthService {
@@ -32,24 +33,14 @@ export class AuthService {
       }
 
       async hashPassword(password: string): Promise<string> {
-      // Force it to be a number and provide a fallback
       const saltRounds = Number(this.configService.get('BCRYPT_SALT_ROUNDS')) || 10;
-      
-      // Ensure it's a valid number between 4 and 31
-      const validSaltRounds = Math.min(Math.max(Math.floor(saltRounds), 4), 31);
-      
-      return bcrypt.hash(password, validSaltRounds);
+      return bcrypt.hash(password, saltRounds);
       }
     
-      //CHANGE THE PARTIAL<USER> INTO A DTO
-      async login(user: Partial<User>): Promise<{accesToken: string}> {
-
-        //user should include the username, password, and roles
-
-
+      
+      async login(user: LoginUserDto): Promise<{accessToken: string}> {
 
         const userFromDb: Partial<User> = await this.validateUser(user.username, user.password);
-
         const roles: string[] = userFromDb.roles.map(role => role.name);
 
         //each role has their permissions also included
@@ -60,7 +51,6 @@ export class AuthService {
 
         if(!userFromDb) throw new UnauthorizedException('Invalid Credentials');
 
-
         const payload = {
             sub: userFromDb.id,
             username: userFromDb.username,
@@ -69,7 +59,7 @@ export class AuthService {
         };
 
         return {
-            accesToken: this.jwtService.sign(payload)
+            accessToken: this.jwtService.sign(payload)
         }
 
 

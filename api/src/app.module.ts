@@ -20,6 +20,10 @@ import { UserController } from './auth/user/user.controller';
     VocabularyModule, 
     StoryModule, 
     VocabularyStatisticsModule,
+
+
+
+    
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',

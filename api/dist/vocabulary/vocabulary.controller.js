@@ -16,6 +16,8 @@ exports.VocabularyController = void 0;
 const common_1 = require("@nestjs/common");
 const vocabulary_service_1 = require("./vocabulary.service");
 const vocabulary_dto_1 = require("./dto/vocabulary.dto");
+const roles_guard_1 = require("../auth/guard/roles.guard");
+const jwt_auth_guard_1 = require("../auth/guard/jwt.auth.guard");
 let VocabularyController = class VocabularyController {
     constructor(vocabularyService) {
         this.vocabularyService = vocabularyService;
@@ -38,6 +40,8 @@ let VocabularyController = class VocabularyController {
 };
 exports.VocabularyController = VocabularyController;
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_guard_1.Roles)('ADMIN'),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),

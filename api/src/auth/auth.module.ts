@@ -7,16 +7,29 @@ import { AuthController } from './auth.controller';
 import { UserModule } from './user/user.module';
 // import { JwtStrategy } from './strategy/jwt.strategy';
 import { LocalStrategy } from './strategy/local.strategy';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './guard/roles.guard';
+import { JwtStrategy } from './strategy/jwt.strategy';
+import { JwtAuthGuard } from './guard/jwt.auth.guard';
 
 
 @Global()
 @Module({
-  providers: [AuthService, LocalStrategy],
+  providers: [
+    AuthService, 
+    LocalStrategy,
+    JwtStrategy, 
+    JwtAuthGuard,
+    RolesGuard,
+    // If you want a global guard, it should be JwtAuthGuard first, then RolesGuard
+    // But I recommend not using global guards until basic auth is working
+    // {provide: APP_GUARD, useClass: JwtAuthGuard},
+    // {provide: APP_GUARD, useClass: RolesGuard}
+  ],
   controllers: [AuthController],
-  exports: [AuthService],
+  exports: [AuthService, RolesGuard, JwtAuthGuard],
   imports: [
-    // UserModule, - Not needed since it's global
-    PassportModule,
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({

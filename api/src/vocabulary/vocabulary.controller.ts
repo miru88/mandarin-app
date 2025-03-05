@@ -1,6 +1,8 @@
-import { Controller, Get, Post, Delete, Patch ,Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Patch ,Param, Body, UseGuards } from '@nestjs/common';
 import { VocabularyService } from './vocabulary.service';
 import { CreateVocabularyDto, UpdateVocabularyDto } from './dto/vocabulary.dto';
+import { Roles, RolesGuard } from 'src/auth/guard/roles.guard';
+import { JwtAuthGuard } from 'src/auth/guard/jwt.auth.guard';
 
 @Controller('vocabulary')
 export class VocabularyController {
@@ -9,6 +11,8 @@ export class VocabularyController {
         private readonly vocabularyService: VocabularyService
     ) {}
 
+    @UseGuards(JwtAuthGuard, RolesGuard)  // JwtAuthGuard must run first
+    @Roles('ADMIN')
     @Get()
     getAllVocabulary() {
         return this.vocabularyService.getAllVocabulary();

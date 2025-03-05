@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CharacterController = void 0;
 const common_1 = require("@nestjs/common");
 const character_service_1 = require("./character.service");
+const roles_guard_1 = require("../auth/guard/roles.guard");
 let CharacterController = class CharacterController {
     constructor(characterService) {
         this.characterService = characterService;
@@ -28,6 +29,7 @@ let CharacterController = class CharacterController {
 };
 exports.CharacterController = CharacterController;
 __decorate([
+    (0, roles_guard_1.Roles)('ADMIN'),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
