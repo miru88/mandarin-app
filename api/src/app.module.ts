@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { VocabularyModule } from './vocabulary/vocabulary.module';
@@ -13,6 +13,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { UserService } from './auth/user/user.service';
 import { UserController } from './auth/user/user.controller';
+import { RequestLogger } from './middleware/request.logger';
 
 
 @Module({
@@ -21,9 +22,6 @@ import { UserController } from './auth/user/user.controller';
     StoryModule, 
     VocabularyStatisticsModule,
 
-
-
-    
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -44,6 +42,12 @@ import { UserController } from './auth/user/user.controller';
     PermissionModule,
     AuthModule],
   controllers: [AppController, UserController],
-  providers: [AppService, UserService],
+  providers: [AppService, UserService, RequestLogger],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(RequestLogger)
+      .forRoutes('*');
+  }
+}

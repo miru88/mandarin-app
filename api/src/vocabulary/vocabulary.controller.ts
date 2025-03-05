@@ -11,28 +11,36 @@ export class VocabularyController {
         private readonly vocabularyService: VocabularyService
     ) {}
 
-    @UseGuards(JwtAuthGuard, RolesGuard)  // JwtAuthGuard must run first
+    @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles('ADMIN')
     @Get()
     getAllVocabulary() {
         return this.vocabularyService.getAllVocabulary();
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('ADMIN')
     @Get('word/:id')
     getOneVocabularyWord(@Param('id') vocabId: number) {
         return this.vocabularyService.getOneVocabularyWord(vocabId);
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('ADMIN')
     @Get('random')
     getRandomVocabularyWord() {
         return this.vocabularyService.getRandomVocabularyWord();
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('ADMIN')
     @Post()
     addWords(@Body() newVocabularyWord: CreateVocabularyDto) {
         this.vocabularyService.addNewWord(newVocabularyWord);
     }
 
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('ADMIN')
     @Patch()
     updateWord(@Body() vocabularyToUpdate: UpdateVocabularyDto) {
         this.vocabularyService.updateWord(vocabularyToUpdate);

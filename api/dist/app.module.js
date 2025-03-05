@@ -22,7 +22,13 @@ const auth_module_1 = require("./auth/auth.module");
 const config_1 = require("@nestjs/config");
 const user_service_1 = require("./auth/user/user.service");
 const user_controller_1 = require("./auth/user/user.controller");
+const request_logger_1 = require("./middleware/request.logger");
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer
+            .apply(request_logger_1.RequestLogger)
+            .forRoutes('*');
+    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
@@ -52,7 +58,7 @@ exports.AppModule = AppModule = __decorate([
             auth_module_1.AuthModule
         ],
         controllers: [app_controller_1.AppController, user_controller_1.UserController],
-        providers: [app_service_1.AppService, user_service_1.UserService],
+        providers: [app_service_1.AppService, user_service_1.UserService, request_logger_1.RequestLogger],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map
