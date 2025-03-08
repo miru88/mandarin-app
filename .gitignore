@@ -23,6 +23,7 @@ yarn-error.log
 
 # Ignore environment files (security reasons)
 api/.env
+api/environment.env
 front/.env
 !.env.example  # Allow tracking an example env file
 
