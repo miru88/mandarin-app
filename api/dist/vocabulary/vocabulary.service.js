@@ -50,6 +50,17 @@ let VocabularyService = class VocabularyService {
             return null;
         await this.vocabularyRepository.save(entityData);
     }
+    async getWordsByBand(band) {
+        const vocabulary = await this.vocabularyRepository
+            .find({ where: { band: band },
+            order: {
+                number: "ASC"
+            } });
+        if (!vocabulary) {
+            return vocabulary;
+        }
+        return [];
+    }
 };
 exports.VocabularyService = VocabularyService;
 exports.VocabularyService = VocabularyService = __decorate([

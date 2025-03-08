@@ -1,8 +1,5 @@
 import { Injectable, UnauthorizedException, forwardRef, Inject } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { User } from './user/user.entity';
-import { Role } from './role/role.entity';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from './user/user.service';
 import { ConfigService } from '@nestjs/config';

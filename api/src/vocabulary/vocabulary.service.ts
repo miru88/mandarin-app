@@ -57,4 +57,20 @@ export class VocabularyService {
         await this.vocabularyRepository.save(entityData);
 
     }
+
+    async getWordsByBand(band: string): Promise<Vocabulary[]> {
+
+        const vocabulary: Vocabulary[] = await this.vocabularyRepository
+        .find({where:{band: band}, 
+             order: {
+                    number: "ASC"
+                    }});
+
+        if(!vocabulary) {
+            return vocabulary;
+        }
+
+        return [];
+
+    }
 }

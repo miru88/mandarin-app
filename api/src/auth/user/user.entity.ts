@@ -28,7 +28,7 @@ export class User {
         name: 'user_role',
         joinColumn: {name: 'userId', referencedColumnName: 'id'},
         inverseJoinColumn: {name: 'roleId', referencedColumnName: 'id'}
-    })  // The semicolon here was causing the error - removed it
+    })  
     roles: Role[];
 
 

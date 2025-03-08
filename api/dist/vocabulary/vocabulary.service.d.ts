@@ -9,4 +9,5 @@ export declare class VocabularyService {
     getRandomVocabularyWord(): Promise<Vocabulary>;
     addNewWord(newWord: Partial<Vocabulary>): Promise<void>;
     updateWord(updateWordObject: UpdateVocabularyDto): Promise<void>;
+    getWordsByBand(band: string): Promise<Vocabulary[]>;
 }
