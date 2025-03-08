@@ -12,8 +12,6 @@ export class VocabularyService {
         private readonly vocabularyRepository: Repository<Vocabulary>,
       ) {}
 
-
-
     async getAllVocabulary(): Promise<Vocabulary[]>{
 
         const allVocabulary: Vocabulary[] = await this.vocabularyRepository.find({order: { band: 'ASC', number: 'ASC'  }});

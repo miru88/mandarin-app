@@ -1,7 +1,16 @@
 import { Controller } from '@nestjs/common';
 
 @Controller('story')
-export class StoryController {}
+export class StoryController {
+
+//create story
+
+
+
+
+
+
+}
 
 // #### Public Endpoints
 // - `GET /stories` - Get a list of stories (filter by difficulty, word count, grammar points, etc.)

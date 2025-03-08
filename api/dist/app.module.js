@@ -23,6 +23,7 @@ const config_1 = require("@nestjs/config");
 const user_service_1 = require("./auth/user/user.service");
 const user_controller_1 = require("./auth/user/user.controller");
 const request_logger_1 = require("./middleware/request.logger");
+const open_ai_module_1 = require("./open-ai/open-ai.module");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer
@@ -55,7 +56,8 @@ exports.AppModule = AppModule = __decorate([
             user_module_1.UserModule,
             role_module_1.RoleModule,
             permission_module_1.PermissionModule,
-            auth_module_1.AuthModule
+            auth_module_1.AuthModule,
+            open_ai_module_1.OpenAiModule
         ],
         controllers: [app_controller_1.AppController, user_controller_1.UserController],
         providers: [app_service_1.AppService, user_service_1.UserService, request_logger_1.RequestLogger],

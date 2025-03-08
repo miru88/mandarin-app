@@ -46,6 +46,13 @@ export class VocabularyController {
         this.vocabularyService.updateWord(vocabularyToUpdate);
     }
 
+
+    //create a vocabulary list
+
+    //get vocabulary list
+
+    //update vocabulary list
+
 }
 
 // #### Public Endpoints
