@@ -64,3 +64,46 @@ Project Idea: Make application to take words that I know and make stories with c
 - Handle isolated word lists and story histories per user.
 - Support tenant-specific configurations (e.g., preferred grammar points).
 
+
+
+
+Core features
+
+Admin-created stories using predefined vocabulary
+Admin ability to add new vocabulary lists
+
+Additional features to consider:
+
+User progress tracking:
+
+Track which vocabulary words users have mastered
+Monitor completion of stories
+Show proficiency levels based on known vocabulary
+
+
+Interactive elements:
+
+Allow users to tap on words for definitions/pronunciations
+Include audio for proper pronunciation
+Add simple comprehension quizzes after stories
+
+
+Personalization:
+
+Difficulty settings based on user level
+Recommended stories based on known vocabulary
+Customizable learning goals
+
+
+Engagement features:
+
+Streak tracking for consistent practice
+Achievement badges for milestone completion
+Daily vocabulary challenges
+
+
+Learning aids:
+
+Character breakdown explanations
+Tone practice exercises
+Grammar notes specific to story content

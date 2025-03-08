@@ -14,6 +14,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UserService } from './auth/user/user.service';
 import { UserController } from './auth/user/user.controller';
 import { RequestLogger } from './middleware/request.logger';
+import { OpenAiModule } from './open-ai/open-ai.module';
 
 
 @Module({
@@ -40,7 +41,8 @@ import { RequestLogger } from './middleware/request.logger';
     UserModule,
     RoleModule,
     PermissionModule,
-    AuthModule],
+    AuthModule,
+    OpenAiModule],
   controllers: [AppController, UserController],
   providers: [AppService, UserService, RequestLogger],
 })
