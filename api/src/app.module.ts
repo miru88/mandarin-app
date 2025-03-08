@@ -35,7 +35,7 @@ import { OpenAiModule } from './open-ai/open-ai.module';
     }),
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: 'environment.env'
+      envFilePath: '.env'
     }),
     CharacterModule,
     UserModule,
