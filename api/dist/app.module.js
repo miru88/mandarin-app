@@ -50,7 +50,7 @@ exports.AppModule = AppModule = __decorate([
             }),
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
-                envFilePath: 'environment.env'
+                envFilePath: '.env'
             }),
             character_module_1.CharacterModule,
             user_module_1.UserModule,
