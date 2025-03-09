@@ -46,8 +46,25 @@ export class VocabularyController {
         this.vocabularyService.updateWord(vocabularyToUpdate);
     }
 
+    //what is the difference between a list and a band?
+        //band is an offial HSK standard
+        //list may or may not have vocabulary from HSK
+            //is indicated by a string in the vocabulary table other than 1 - 9
+
+
+    //have to think about how to implement lists
+        //what to do if a new list hase a word that already exists?
+        //do we just have the word in the vocabulary table and use the band column?
+        //for a one person application, sure duplicates are fine i think
+        
+        //possibly have a list that we want to add with the list name
+        //add the ones that dont exist,keep the vocabulary table unique,
+        //this would require to check if there arent already and duplicates
+        //drop the band column and depend on the vocabulary list table  
 
     //create a vocabulary list
+
+
 
     //get vocabulary list
 

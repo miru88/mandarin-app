@@ -4,12 +4,15 @@ import { Repository } from 'typeorm';
 import { Vocabulary } from './entities/vocabulary.entity';
 import { CreateVocabularyDto, UpdateVocabularyDto } from './dto/vocabulary.dto';
 import { workerData } from 'worker_threads';
+import { VocabularyList } from './entities/vocabularyList.entity';
 
 @Injectable()
 export class VocabularyService {
     constructor(
         @InjectRepository(Vocabulary)
         private readonly vocabularyRepository: Repository<Vocabulary>,
+        @InjectRepository(VocabularyList)
+        private readonly vocabularyListRepository: Repository<VocabularyList>,
       ) {}
 
     async getAllVocabulary(): Promise<Vocabulary[]>{
@@ -72,5 +75,16 @@ export class VocabularyService {
 
         return [];
 
+    }
+
+    async createVocabularyList(newListName: string) {
+        const list: VocabularyList = await this.vocabularyListRepository.findOne({where:{name: newListName}});
+
+        if(!list) {
+
+            const newList: VocabularyList =  this.vocabularyListRepository.create({name: newListName});
+            await this.vocabularyListRepository.save(newList);
+
+        }
     }
 }
