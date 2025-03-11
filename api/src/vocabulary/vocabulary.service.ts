@@ -1,18 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Equal, In, Repository } from 'typeorm';
 import { Vocabulary } from './entities/vocabulary.entity';
 import { CreateVocabularyDto, UpdateVocabularyDto } from './dto/vocabulary.dto';
 import { workerData } from 'worker_threads';
-import { VocabularyList } from './entities/vocabularyList.entity';
+import { GroupedVocabList } from './entities/groupedVocabList.entity'
+import { VocabularyGroupedVocabListLookupTable } from './entities/vocabularyGroupedVocabListLookupTable.entity';
 
 @Injectable()
 export class VocabularyService {
     constructor(
         @InjectRepository(Vocabulary)
         private readonly vocabularyRepository: Repository<Vocabulary>,
-        @InjectRepository(VocabularyList)
-        private readonly vocabularyListRepository: Repository<VocabularyList>,
+        @InjectRepository(GroupedVocabList)
+        private readonly groupedvocablistRepository: Repository<GroupedVocabList>,
       ) {}
 
     async getAllVocabulary(): Promise<Vocabulary[]>{
@@ -43,10 +44,20 @@ export class VocabularyService {
 
     async addNewWord(newWord: Partial<Vocabulary>): Promise<void> {
 
+
+        const wordsInRepo: Vocabulary[] = await this.vocabularyRepository.find({where:{
+            chinese: Equal(newWord.chinese),
+            band: Equal(newWord.band)
+        }
+        });
+
+        if(wordsInRepo) return;
+
         const createdWord: Partial<Vocabulary> = this.vocabularyRepository.create(newWord);
-        createdWord.band = 'CUSTOM';
 
         await this.vocabularyRepository.save(createdWord);
+
+        await this.addNewVocabularyToGroupedVocabList([createdWord.id], createdWord.band);
     }
 
     async updateWord(updateWordObject: UpdateVocabularyDto): Promise<void> {
@@ -77,14 +88,50 @@ export class VocabularyService {
 
     }
 
-    async createVocabularyList(newListName: string) {
-        const list: VocabularyList = await this.vocabularyListRepository.findOne({where:{name: newListName}});
+    /**
+     * Vocabulary GroupedVocabList as in a groupedvocablist name and its primary key
+     */
+    async createGroupedVocabList(newGroupedVocabListName: string): Promise<void> {
+        const groupedvocablist: GroupedVocabList = await this.groupedvocablistRepository.findOne({where:{name: newGroupedVocabListName}});
 
-        if(!list) {
+        if(!groupedvocablist) {
 
-            const newList: VocabularyList =  this.vocabularyListRepository.create({name: newListName});
-            await this.vocabularyListRepository.save(newList);
+            const newGroupedVocabList: GroupedVocabList =  this.groupedvocablistRepository.create({name: newGroupedVocabListName});
+            await this.groupedvocablistRepository.save(newGroupedVocabList);
 
         }
     }
+
+
+    async addNewVocabularyToGroupedVocabList(wordIds: number[], listName: string): Promise<void> {
+
+        const words: Vocabulary[] = await this.vocabularyRepository.find({where:{
+            id: In(wordIds)
+        }});
+
+
+        const listNameResult = await this.vocabularyRepository.query(
+            `SELECT id, name FROM grouped_vocab_list WHERE name = $1`,
+            [listName]
+          );
+
+        if(!words || !listNameResult) return;
+
+
+        const insertedValues = await this.vocabularyRepository.createQueryBuilder()
+            .insert()
+            .into(VocabularyGroupedVocabListLookupTable)
+            .values(
+                wordIds.map(id =>({
+                    vocabularyId: id,
+                    groupedVocabListid: listNameResult.id
+                }))
+            )
+            .execute();
+
+        return;
+
+    }
+
+    
 }

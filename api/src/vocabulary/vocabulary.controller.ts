@@ -63,7 +63,12 @@ export class VocabularyController {
         //drop the band column and depend on the vocabulary list table  
 
     //create a vocabulary list
-
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('ADMIN')
+    @Patch()
+    createVocabularyList(@Body() listName: any) {//fix this
+        this.vocabularyService.createGroupedVocabList(listName);
+    }
 
 
     //get vocabulary list

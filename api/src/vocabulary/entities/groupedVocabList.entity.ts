@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
 
 @Entity() 
-export class VocabularyList {
+export class GroupedVocabList {
     @PrimaryGeneratedColumn()
     id: number;
   
